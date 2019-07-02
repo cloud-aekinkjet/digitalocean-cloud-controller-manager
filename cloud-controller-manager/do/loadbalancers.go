@@ -193,6 +193,14 @@ func getDefaultLoadBalancerName(service *v1.Service) string {
 //
 // EnsureLoadBalancer will not modify service or nodes.
 func (l *loadBalancers) EnsureLoadBalancer(ctx context.Context, clusterName string, service *v1.Service, nodes []*v1.Node) (*v1.LoadBalancerStatus, error) {
+	// TODO: check if DO manages the given domain or if a subdomain then if it manages the naked domain
+	// TODO: check if the given subdomain exists already, and if it's pointing to our service LB external IP
+	// TODO: create the subdomain record for our domain if it doesn't exist
+	// TODO: update the subdomain record for our domain if it does exist but has the wrong IP
+
+	// TODO: check if certificate exists already for the given (sub)domain
+	// TODO: create a new certificate for the (sub)domain if it doesn't exist
+
 	lbStatus, exists, err := l.GetLoadBalancer(ctx, clusterName, service)
 	if err != nil {
 		return nil, err
